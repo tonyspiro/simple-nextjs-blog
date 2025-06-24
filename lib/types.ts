@@ -55,6 +55,7 @@ export interface Post {
     };
     teaser: string;
     categories: {
+      id?: string;
       title: string;
     }[];
   };
