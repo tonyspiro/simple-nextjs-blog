@@ -1,3 +1,4 @@
+// lib/cosmic.ts
 import { createBucketClient } from '@cosmicjs/sdk';
 import { Post, GlobalData, Author, HomePageData, AboutPageData, Category } from './types';
 
@@ -185,7 +186,7 @@ export async function getAuthors(): Promise<Author[]> {
   } catch (error) {
     console.log('Error fetching authors:', error);
     // Handle 404 error when no objects are found
-    if (error && error.status === 404) {
+    if (error && typeof error === 'object' && 'status' in error && error.status === 404) {
       return Promise.resolve([]);
     }
   }
@@ -207,7 +208,7 @@ export async function getCategories(): Promise<Category[]> {
   } catch (error) {
     console.log('Error fetching categories:', error);
     // Handle 404 error when no objects are found
-    if (error && error.status === 404) {
+    if (error && typeof error === 'object' && 'status' in error && error.status === 404) {
       return Promise.resolve([]);
     }
   }
@@ -249,7 +250,7 @@ export async function getPostsByCategory(categoryId: string): Promise<Post[]> {
   } catch (error) {
     console.log('Error fetching posts by category:', error);
     // Handle 404 error when no objects are found
-    if (error && error.status === 404) {
+    if (error && typeof error === 'object' && 'status' in error && error.status === 404) {
       return Promise.resolve([]);
     }
   }
