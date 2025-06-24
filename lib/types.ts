@@ -23,6 +23,16 @@ export interface AboutPageData {
   };
 }
 
+export interface Category {
+  id: string;
+  slug: string;
+  title: string;
+  metadata: {
+    description?: string;
+    color?: string;
+  };
+}
+
 export interface Post {
   id: string;
   slug: string;
