@@ -6,6 +6,7 @@ const cosmic = createBucketClient({
   bucketSlug: process.env.COSMIC_BUCKET_SLUG ?? '',
   // @ts-ignore
   readKey: process.env.COSMIC_READ_KEY ?? '',
+  apiEnvironment: "staging"
 });
 export default cosmic;
 
