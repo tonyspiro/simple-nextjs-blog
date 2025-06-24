@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
 
@@ -21,7 +21,7 @@ export function useTheme(): ThemeContextType {
 }
 
 interface ThemeProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
@@ -78,13 +78,16 @@ export function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
     setTheme(newTheme);
   };
 
-  // Prevent flash of incorrect theme during hydration
-  if (!mounted) {
-    return <>{children}</>;
-  }
+  const contextValue: ThemeContextType = {
+    theme,
+    setTheme: handleSetTheme,
+    resolvedTheme
+  };
 
+  // Always provide the context, even during SSR
+  // The mounted check prevents hydration mismatches
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: handleSetTheme, resolvedTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );

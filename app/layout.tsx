@@ -39,7 +39,7 @@ export default async function RootLayout({
                   if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                     document.documentElement.classList.add('dark');
                   } else {
-                    document.documentElement.classList.add('light');
+                    document.documentElement.classList.remove('dark');
                   }
                 } catch (e) {}
               })();
