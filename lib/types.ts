@@ -5,6 +5,24 @@ export interface GlobalData {
   };
 }
 
+export interface HomePageData {
+  metadata: {
+    hero_title: string;
+    hero_description: string;
+    welcome_title: string;
+    welcome_content: string;
+    cta_text: string;
+  };
+}
+
+export interface AboutPageData {
+  metadata: {
+    content: string;
+    mission_statement: string;
+    team_info?: string;
+  };
+}
+
 export interface Post {
   id: string;
   slug: string;

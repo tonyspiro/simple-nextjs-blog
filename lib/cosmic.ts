@@ -1,5 +1,5 @@
 import { createBucketClient } from '@cosmicjs/sdk';
-import { Post, GlobalData, Author } from './types';
+import { Post, GlobalData, Author, HomePageData, AboutPageData } from './types';
 
 const cosmic = createBucketClient({
   // @ts-ignore
@@ -28,6 +28,44 @@ export async function getGlobalData(): Promise<GlobalData> {
     console.log('Oof', error);
   }
   return Promise.resolve({} as GlobalData);
+}
+
+export async function getHomePageData(): Promise<HomePageData> {
+  try {
+    const data: any = await Promise.resolve(
+      cosmic.objects
+        .findOne({
+          type: 'home-pages',
+          slug: 'home',
+        })
+        .props('metadata')
+        .depth(1)
+    );
+    const homeData: HomePageData = data.object;
+    return Promise.resolve(homeData);
+  } catch (error) {
+    console.log('Error fetching home page data:', error);
+  }
+  return Promise.resolve({} as HomePageData);
+}
+
+export async function getAboutPageData(): Promise<AboutPageData> {
+  try {
+    const data: any = await Promise.resolve(
+      cosmic.objects
+        .findOne({
+          type: 'about-pages',
+          slug: 'about',
+        })
+        .props('metadata')
+        .depth(1)
+    );
+    const aboutData: AboutPageData = data.object;
+    return Promise.resolve(aboutData);
+  } catch (error) {
+    console.log('Error fetching about page data:', error);
+  }
+  return Promise.resolve({} as AboutPageData);
 }
 
 export async function getAllPosts(): Promise<Post[]> {
