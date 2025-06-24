@@ -1,59 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useTheme } from './ThemeProvider';
 
 export default function ThemeToggle(): JSX.Element {
-  const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system');
-
-  useEffect(() => {
-    // Get stored theme preference or default to system
-    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | 'system' | null;
-    if (storedTheme) {
-      setTheme(storedTheme);
-    }
-
-    // Apply theme based on preference
-    const applyTheme = (currentTheme: 'light' | 'dark' | 'system') => {
-      const root = window.document.documentElement;
-      
-      if (currentTheme === 'system') {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        root.classList.toggle('dark', systemTheme === 'dark');
-      } else {
-        root.classList.toggle('dark', currentTheme === 'dark');
-      }
-    };
-
-    applyTheme(storedTheme || 'system');
-
-    // Listen for system theme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleSystemThemeChange = () => {
-      if (theme === 'system') {
-        applyTheme('system');
-      }
-    };
-
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
-    return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
-  }, [theme]);
+  const { theme, setTheme } = useTheme();
 
   const toggleTheme = (): void => {
     const themes: ('light' | 'dark' | 'system')[] = ['light', 'dark', 'system'];
     const currentIndex = themes.indexOf(theme);
     const nextTheme = themes[(currentIndex + 1) % themes.length];
-    
     setTheme(nextTheme);
-    localStorage.setItem('theme', nextTheme);
-
-    // Apply the new theme immediately
-    const root = window.document.documentElement;
-    if (nextTheme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      root.classList.toggle('dark', systemTheme === 'dark');
-    } else {
-      root.classList.toggle('dark', nextTheme === 'dark');
-    }
   };
 
   const getThemeIcon = (): string => {
