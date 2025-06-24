@@ -19,9 +19,9 @@ export default async function AboutPage(): Promise<JSX.Element> {
 
         {/* Mission Statement */}
         {aboutData.metadata?.mission_statement && (
-          <section className="bg-blue-50 dark:bg-blue-950/30 rounded-lg p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Mission</h2>
-            <div className="prose dark:prose-invert">
+          <section className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-8 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Our Mission</h2>
+            <div className="prose dark:prose-invert [&_p]:text-gray-700 dark:[&_p]:text-gray-200">
               <div dangerouslySetInnerHTML={{ __html: aboutData.metadata.mission_statement }} />
             </div>
           </section>
@@ -30,8 +30,8 @@ export default async function AboutPage(): Promise<JSX.Element> {
         {/* Team Info */}
         {aboutData.metadata?.team_info && (
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Team</h2>
-            <div className="prose dark:prose-invert">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Our Team</h2>
+            <div className="prose dark:prose-invert [&_p]:text-gray-700 dark:[&_p]:text-gray-200">
               <div dangerouslySetInnerHTML={{ __html: aboutData.metadata.team_info }} />
             </div>
           </section>
@@ -39,7 +39,7 @@ export default async function AboutPage(): Promise<JSX.Element> {
 
         {/* Default content if no CMS data */}
         {!aboutData.metadata && (
-          <div className="prose prose-lg dark:prose-invert max-w-none">
+          <div className="prose prose-lg dark:prose-invert max-w-none [&_p]:text-gray-700 dark:[&_p]:text-gray-200">
             <p>
               Welcome to Our Blue Marble, a platform dedicated to exploring and celebrating the wonders of our planet Earth. 
               Through thoughtful articles, stunning imagery, and inspiring stories, we aim to foster a deeper appreciation 
