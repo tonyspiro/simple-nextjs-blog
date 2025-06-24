@@ -4,6 +4,7 @@ import { Post, GlobalData, Author, HomePageData, AboutPageData, Category } from 
 const cosmic = createBucketClient({
   bucketSlug: process.env.COSMIC_BUCKET_SLUG || '',
   readKey: process.env.COSMIC_READ_KEY || '',
+  apiEnvironment: "staging"
 });
 
 export default cosmic;
