@@ -1,5 +1,5 @@
 import { createBucketClient } from '@cosmicjs/sdk';
-import { Post, GlobalData, Author, HomePageData, AboutPageData } from './types';
+import { Post, GlobalData, Author, HomePageData, AboutPageData, Category } from './types';
 
 const cosmic = createBucketClient({
   // @ts-ignore
@@ -166,6 +166,92 @@ export async function getAuthorPosts(id: string): Promise<Post[]> {
     return Promise.resolve(authorPosts);
   } catch (error) {
     console.log('Oof', error);
+  }
+  return Promise.resolve([]);
+}
+
+export async function getAuthors(): Promise<Author[]> {
+  try {
+    const data: any = await Promise.resolve(
+      cosmic.objects
+        .find({
+          type: 'authors',
+        })
+        .props('id,title,slug,metadata')
+        .depth(1)
+    );
+    const authors: Author[] = await data.objects;
+    return Promise.resolve(authors);
+  } catch (error) {
+    console.log('Error fetching authors:', error);
+    // Handle 404 error when no objects are found
+    if (error && error.status === 404) {
+      return Promise.resolve([]);
+    }
+  }
+  return Promise.resolve([]);
+}
+
+export async function getCategories(): Promise<Category[]> {
+  try {
+    const data: any = await Promise.resolve(
+      cosmic.objects
+        .find({
+          type: 'categories',
+        })
+        .props('id,title,slug,metadata')
+        .depth(1)
+    );
+    const categories: Category[] = await data.objects;
+    return Promise.resolve(categories);
+  } catch (error) {
+    console.log('Error fetching categories:', error);
+    // Handle 404 error when no objects are found
+    if (error && error.status === 404) {
+      return Promise.resolve([]);
+    }
+  }
+  return Promise.resolve([]);
+}
+
+export async function getCategory(slug: string): Promise<Category> {
+  try {
+    const data: any = await Promise.resolve(
+      cosmic.objects
+        .findOne({
+          type: 'categories',
+          slug,
+        })
+        .props('id,title,slug,metadata')
+        .depth(1)
+    );
+    const category: Category = await data.object;
+    return Promise.resolve(category);
+  } catch (error) {
+    console.log('Error fetching category:', error);
+  }
+  return Promise.resolve({} as Category);
+}
+
+export async function getPostsByCategory(categoryId: string): Promise<Post[]> {
+  try {
+    const data: any = await Promise.resolve(
+      cosmic.objects
+        .find({
+          type: 'posts',
+          'metadata.categories': categoryId,
+        })
+        .props(['id', 'type', 'slug', 'title', 'metadata', 'created_at'])
+        .depth(1)
+    );
+    const posts: Post[] = await data.objects;
+    return Promise.resolve(posts);
+  } catch (error) {
+    console.log('Error fetching posts by category:', error);
+    // Handle 404 error when no objects are found
+    if (error && error.status === 404) {
+      return Promise.resolve([]);
+    }
   }
   return Promise.resolve([]);
 }
