@@ -1,4 +1,4 @@
-# Simple Next.js Blog
+# LFG Cursor
 
 ![simple-nextjs-blog](https://github.com/cosmicjs/simple-nextjs-blog/assets/1950722/64b6673a-e25b-4124-93ed-bb57a6a35211)
 
